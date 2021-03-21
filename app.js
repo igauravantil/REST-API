@@ -1,18 +1,29 @@
 const express = require('express');
+require('dotenv').config()
 const app  = express();
 const mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost:27017/test', {useNewUrlParser: true, useUnifiedTopology: true});
+var bodyParser = require('body-parser')
+var cookieParser = require('cookie-parser')
+var cors = require('cors')
+const posts = require("./routes/posts")
+
+mongoose.connect(process.env.Database, 
+{useNewUrlParser: true,  
+    useUnifiedTopology: true,
+    useCreateIndex : true
+}).then(console.log("DB CONNECTED"));
 
 //middlewares
-app.use('/',() => {
-    console.log('this is a middleware')
-})
+app.use(bodyParser.json()) 
+app.use(bodyParser.urlencoded({extended : true}))
+app.use(cookieParser())
+app.use(cors())
+
 
 //routes
-app.get('/',(req,res) => {
-    res.send('we are on home')
-    
-})
+app.use('/api',posts);
 
-//how to we start listening to the server
-app.listen(3000);
+//how to we start  listening to the server
+app.listen(process.env.port,()=>{
+    console.log(`app is running at ${process.env.port}`)
+});
