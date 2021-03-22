@@ -11,7 +11,7 @@ router.post('/post',(req,res)=>{
     let nayiPost = new newPost();
     nayiPost.name = req.body.name;
     nayiPost.id = req.body.id;
-    nayiPost.comments = req.body.comments;
+    nayiPost.comments = req.comments;
     nayiPost.save( (err,body)=>{
         if(err){
             
@@ -25,6 +25,7 @@ router.post('/post',(req,res)=>{
             res.json({
                 status:200,
                 body:nayiPost
+                
             })
         }
     })
