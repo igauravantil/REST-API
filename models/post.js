@@ -1,11 +1,11 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 const {Schema} = mongoose;
 
 const postSchema = new Schema({
     name : String,
     id : Number,
     Content: {
-        type :String ,
+        type :String 
         
     },
     comments:String,
