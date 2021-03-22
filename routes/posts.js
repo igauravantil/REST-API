@@ -31,22 +31,39 @@ router.post('/post',(req,res)=>{
         }
     })
 })
-router.get('/getPost/',(req,res)=>{
+router.get('/getAllPost/',(req,res)=>{
     const name = req.body.name;
-    newPost.findOne({name},(err,post)=>{
+    newPost.find({},(err,post)=>{
         if(err){
             res.status(404).json({
                 msg:"Cannot find the post"
             })
         }
         else{
+            res.json({post})
             
-            res.json({ post: post.comments});
+                
+            
         }
     })
     
     
 })
+
+router.get('/specificPost/:postId',(req,res)=>{
+    const sid = req.params.postId;
+    newPost.findOne({_id:sid},(err,post)=>{
+        if(err){
+            res.status(404).json({
+                msg:"Not found"
+            })
+        }
+        else{
+            res.json(post)
+        }
+    })
+})
+
 
 
 
